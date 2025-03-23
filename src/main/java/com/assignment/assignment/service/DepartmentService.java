@@ -12,15 +12,16 @@ import com.assignment.assignment.repository.DepartmentRepository;
 import com.assignment.assignment.repository.EmployeeRepository;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
-
 import static java.util.Arrays.stream;
 
 @Service
@@ -90,7 +91,6 @@ public class DepartmentService {
             if (!repository.existsById(id)) {
                 throw new DepartmentNotFoundException("Invalid Department ID: " + id);
             }
-//            if (repository.existsById(id)) {
                 Department updated = repository.save(new Department(id, dto.getName()));
                 DepartmentDTO updatedDto = new DepartmentDTO(updated.getId(), updated.getName());
 
@@ -100,7 +100,6 @@ public class DepartmentService {
                         updatedDto
                 );
                 return ResponseEntity.ok(response);
-//            }
         }catch (DepartmentNotFoundException e){
             ErrorFormat err = new ErrorFormat(
                     LocalDateTime.now(),
@@ -141,58 +140,87 @@ public class DepartmentService {
     public ResponseEntity<?> getLimitedDepartmentsByEmployee(String employeeId, int count) {
         try {
             Optional<Employee> employeeOpt = employeeRepository.findById(employeeId);
+            try {
 
-            if (employeeOpt.isEmpty()) {
-                throw new UserNotFoundException("Employee not found with ID: " + employeeId);
+                if (employeeOpt.isEmpty()) {
+                    throw new UserNotFoundException("Employee not found with ID: " + employeeId);
+                }
+            }catch (UserNotFoundException e){
+                ErrorFormat err = new ErrorFormat(
+                        LocalDateTime.now(),
+                        "Employee not found ",
+                        e.getMessage()
+                );
+
+                return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
             }
 
-            Department department = employeeOpt.get().getDepartment();
-            List<String> departmentNames = List.of(department.getName());
+            List<Department> departments = employeeOpt.get().getDepartments();
+            try {
+                if (departments.isEmpty()) {
+                    throw new DepartmentNotFoundException("No departments found for employee ID: " + employeeId);
+                }
+            }catch (DepartmentNotFoundException e){
+                ErrorFormat err = new ErrorFormat(
+                        LocalDateTime.now(),
+                        "No department found related to this employee",
+                        e.getMessage()
+                );
+                return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
+            }
+            List<String> departmentNames = departments.stream()
+                    .limit(Math.min(count, departments.size()))
+                    .map(Department::getName)
+                    .collect(Collectors.toList());
 
             ResponseFormat<List<String>> response = new ResponseFormat<>(
                     LocalDateTime.now(),
                     "Fetched " + departmentNames.size() + " departments for employee " + employeeId,
                     departmentNames
             );
-        return ResponseEntity.ok(response);
-        }catch (UserNotFoundException e){
+
+            return ResponseEntity.ok(response);
+        } catch (UserNotFoundException | DepartmentNotFoundException e) {
             ErrorFormat err = new ErrorFormat(
                     LocalDateTime.now(),
-                    "The User Id is invalid",
+                    "Error fetching departments",
+                    e.getMessage()
+            );
+            return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
+        }
+
+    }
+    public ResponseEntity<?> getEmployeesByDepartment(String departmentId, int limit) {
+        Optional<Department> departmentOpt = repository.findById(departmentId);
+        try {
+
+            if (departmentOpt.isEmpty()) {
+                throw new DepartmentNotFoundException("Nodepartment found with this iD" );
+            }
+        }catch (DepartmentNotFoundException e){
+            ErrorFormat err = new ErrorFormat(
+                    LocalDateTime.now(),
+                    "No Department found with this Id",
                     e.getMessage()
             );
 
             return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
         }
+        List<Employee> employees = employeeRepository.findByDepartmentsContaining(departmentOpt.get());
+        List<Map<String, String>> employeeNames = new ArrayList<>();
+        int count = 0;
+        for (Employee emp : employees) {
+            if (count >= limit) break;
+            Map<String, String> empData = new HashMap<>();
+            empData.put("id", emp.getId());
+            empData.put("name", emp.getName());
+            employeeNames.add(empData);
+            count++;
+        }
 
+        return ResponseEntity.ok(new ResponseFormat<>(LocalDateTime.now(), "Employees retrieved successfully", employeeNames));
     }
 
 
-//    public ResponseEntity<ResponseFormat<List<String>>> getDepartmentsByEmployee(String email, int limit) {
-//        Optional<Employee> employeeOpt = employeeRepository.findByEmail(email);
-//
-//        if (employeeOpt.isEmpty()) {
-//            throw new RuntimeException("Employee not found with email: " + email);
-//        }
-//
-//        // Fetching the department of the employee
-//        Employee employee = employeeOpt.get();
-//        String departmentId = employee.getDepartment().getId(); // Fetch single department ID
-//
-//        // Since Employee has only one department, we fetch additional related departments
-//        List<String> departmentNames = repository.findByEmployeeId(employee.getId()) // Custom Query
-//                .stream()
-//                .map(Department::getName)
-//                .limit(limit)
-//                .collect(Collectors.toList());
-//
-//        ResponseFormat<List<String>> response = new ResponseFormat<>(
-//                LocalDateTime.now(),
-//                "Departments fetched successfully for employee " + email,
-//                departmentNames
-//        );
-//
-//        return ResponseEntity.ok(response);
-//    }
 
 }

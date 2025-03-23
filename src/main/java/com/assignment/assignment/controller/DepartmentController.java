@@ -37,12 +37,16 @@ public class DepartmentController {
     }
 
 
-    //partially working rightnow
     @GetMapping("/employee/{employeeId}/{count}")
     public ResponseEntity<?> getLimitedDepartmentsByEmployee(
             @PathVariable String employeeId,
             @PathVariable int count) {
         return service.getLimitedDepartmentsByEmployee(employeeId, count);
+    }
+
+    @GetMapping("/{departmentId}/employees")
+    public ResponseEntity<?> getEmployeesByDepartment(@PathVariable String departmentId, @RequestParam(defaultValue = "10") int limit) {
+        return service.getEmployeesByDepartment(departmentId, limit);
     }
 
 }

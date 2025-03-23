@@ -13,7 +13,7 @@ public class EmployeeDTO {
     private String designation;
     private String email;
     @DBRef
-    private String departmentId;
+    private List<String> departmentIds;
     private Double salary;
 
 }
