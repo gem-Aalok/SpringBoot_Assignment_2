@@ -1,0 +1,13 @@
+Question 1 : Define what web services are and their significance in modern software 
+development.
+
+Ans : 
+Web services are standard methods for setting communication between different applications or machine to machine communication using network
+for example : your phone ask a server for latest weather forecast and display it to you it is using a webservice
+        
+Significance of webservices
+-> Loosely coupling : application in which component are weakly associated ie.. have breakable relationship with each other 
+-> Reusability : You can build a service once and reuse it across multiple applications.
+-> Scalability: web services can be scaled independently, allowing you to handle increased traffic and demand
+-> Microservices architecture: web services are foundational to microservices where applications are built as a collection of small, independent services.
+

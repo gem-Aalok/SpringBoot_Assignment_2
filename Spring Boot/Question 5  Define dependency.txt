@@ -1,0 +1,11 @@
+Question 5 : Define dependency injection and its importance in Spring framework
+Ans :
+Dependency Injection is a design pattern where Spring injects dependencies into a class rather than allowing the class to create them
+
+Take it as like : instead of building a car engine into the car yourself, you get a pre-built engine and install it\
+
+Importance of DI in spring
+-> Loose coupling : reduce depencies between classes , increase modularity
+-> Reusability : classes become more modular and dont depend on specific implementation
+-> Easier Testing : Helps in easy testing with mock dependencies
+-> Better Maintainability : enhances code reusability and readability

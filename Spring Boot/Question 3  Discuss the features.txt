@@ -1,0 +1,12 @@
+Question 3 : >Discuss the features and benefits of using Spring Boot for building web 
+applications.
+
+Ans : Features and benefits of using spring boot are as followas:
+
+Auto-configuration: Spring Boot automatically configures your application based on the dependencies you add. It saves you a lot of manual configuration.
+like @SpringBootApplication -> {includes configuration , @componentscan , @EnableAutoConfiguration}
+Embedded Servers: It comes with built-in servers (like Tomcat or Jetty), so you don't need to install and configure them separately.
+Starter Dependencies: Spring Boot provides "starter" dependencies, which are pre-configured sets of libraries that make it easy to add common functionality.
+production-Ready Features:It includes features like health checks, metrics, and externalized configuration, making it easy to deploy and manage applications in production.
+simplified development: reduces the amount of boilerplate code you need to write, allowing you to focus on the business logic.
+Rapid Development: enable faster development cycles, allowing you to get applications up and running quickly

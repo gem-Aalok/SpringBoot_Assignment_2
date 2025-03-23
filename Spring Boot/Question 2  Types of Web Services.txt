@@ -1,0 +1,24 @@
+Question 2 : Types of Web Services (SOAP, REST) and Differences
+Ans : 
+
+SOAP (Simple Object Access Protocol):
+
+Think of SOAP as a formal, structured way of sending messages
+-> It uses XML, a language that's very strict about how data is formatted
+-> known for its robust security features and transaction support
+-> It is generally considered more complex and heavyweight
+
+REST (Representational State Transfer):
+
+-> REST is more like a casual conversation. Its simpler and more flexible
+-> It often uses JSON (JavaScript Object Notation), which is easier for humans and machines to read.
+-> It provides HTTP methods to peform CRUD operations on resources
+-> Its known for its scalability and performance.
+-> Its generally considered more lightweight and easier to work with.
+
+Key Differences:
+
+Data Format: SOAP uses XML, REST often uses JSON
+Complexity: SOAP is more complex, REST is simpler
+Performance: REST is generally faster and more scalable
+Flexibility: REST is more flexible than SOAP

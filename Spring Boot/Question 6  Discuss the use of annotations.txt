@@ -1,0 +1,47 @@
+Question 6 : Discuss the use of annotations such as
+@RestController,
+@RequestMapping,
+@GetMapping,
+@PostMapping,
+@PutMapping,
+@PathVariable,
+@RequestParam,
+@Bean,
+@Service,
+@Component,
+@Autowired,
+@ResponseBody,
+@ResponseStatus,
+@RequestMethod, for defining API endpoints.
+
+Ans : 
+Annotations are metadata that simplify configuration dependency injection, and bean management in Java applications
+
+@RestController – Defines a REST API controller
+@RequestMapping – Maps HTTP requests to a method or class
+@GetMapping – Handles GET requests
+@PostMapping – Handles POST requests
+@PutMapping – Handles PUT requests
+@PathVariable – Extracts values from the URL path
+@RequestParam – Extracts query parameters
+@Bean – Defines a bean managed by spring
+@Service – Marks a service layer component
+@Component – Generic annotation for Spring component
+@Autowired – Automatically injects dependencies
+@ResponseBody – Converts response to JSON
+@ResponseStatus – Defines HTTP status codes
+@RequestMethod – Specifies allowed HTTP methods
+
+Some more Annotations are 
+@Value : inject values form properties files
+@Repository: indicate class is a repository 
+
+@RestController
+@RequestMapping("/users")
+public class AssignmentController {
+
+    @GetMapping("/{id}")
+    public String getUser(@PathVariable int id) {
+        return "User ID: " + id;
+    }
+}

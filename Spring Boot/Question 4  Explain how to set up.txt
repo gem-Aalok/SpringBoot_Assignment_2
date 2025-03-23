@@ -1,0 +1,27 @@
+Question 4  :Explain how to set up a Spring Boot project using Spring Initializer
+Ans : 
+
+1. Open Spring Initializr
+Go to web browser search spring initializer https://start.spring.io/
+
+2. Choose Project Settings
+once on the website choose the project setting you want
+like gradle or maven 
+language
+spring boot version
+metadata 
+
+3. Add Dependencies
+Choose dependency from right side bar in the website
+Spring web , Spring jpa , spring data security
+
+4. Generate and Download the Project
+
+After selecting the required dependencies, click the Generate button. This will download a ZIP file containing your project files.
+
+5. Import the Project into Your IDE
+
+Extract the downloaded ZIP file
+Open the IDE you want to work in 
+
+6. Run Your Spring Boot Application

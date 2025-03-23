@@ -1,0 +1,10 @@
+Question 7 : Briefly explain the significance of @Bean annotation in spring boot
+Ans : 
+The @Bean annotation tells Spring that a method produces a bean to be managed by the Spring container
+all the components are beans for not all beans are components
+
+Significance : 
+define custom beans
+Enhance modularity and testability
+Controlling object creation  : allows to define how exactly an object is created
+Dependency Management : Beans created with @Beans can be injected to other components using @autowired which enables dependency injection
