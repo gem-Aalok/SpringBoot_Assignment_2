@@ -204,7 +204,7 @@ public ResponseEntity<?> addEmployee(@RequestBody EmployeeDTO dto) {
         EmployeeDTO updatedEmployeeDTO = new EmployeeDTO(
                 updatedEmployee.getId(), updatedEmployee.getName(),
                 updatedEmployee.getDesignation(), updatedEmployee.getEmail(),
-                updatedEmployee.getDepartments().stream().map(Department::getId).toList(), // List of department IDs
+                updatedEmployee.getDepartments().stream().map(Department::getId).toList(),
                 updatedEmployee.getSalary()
         );
 
